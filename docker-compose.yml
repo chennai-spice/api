@@ -1,0 +1,25 @@
+version: '2'
+services:
+    mongodb:
+        image: mongo
+        container_name: CSR-Database
+        volumes:
+            - data:/data/db
+        ports:
+            - 27018:27017
+    web:
+        build: .
+        container_name: CSR-API
+        environment:
+          - FORCE_COLOR=1 # Terminal color support for Chalk package
+        volumes:
+            - .:/var/app
+        ports:
+            - '3001:3000'
+        links:
+            - 'mongodb'
+
+volumes:
+    data:
+        driver: local
+
