@@ -5,7 +5,7 @@
   "main": "dist",
   "scripts": {
     "db:start": "docker run -d -p 3001:27017 --name CSR-Database -v urlShort:/data/db mongo",
-    "db:stop": "docker stop url-short & docker rm url-short",
+    "db:stop": "docker stop CSR-Database & docker rm CSR-Database",
     "prebuild": "rimraf ./dist & npm run lint",
     "build": "babel src -D -d dist",
     "prestart": "npm run -s build",
