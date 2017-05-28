@@ -21,5 +21,6 @@ export default (app) => {
   if (isDev) {
     app.use(morgan('tiny'))
   }
-  
+
+
 }

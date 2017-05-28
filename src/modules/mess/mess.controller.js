@@ -34,6 +34,36 @@ export const getCustomerById = async (req, res) => {
 
 }
 
+export const updateCustomerById = async (req, res) => {
+  const { id } = req.params
+  const { mobile, name, company, active, messAmount, breakfast, lunch, dinner } = req.body
+
+  console.log(req.body)
+
+  try {
+    const customer = await Mess.findById(id)
+    if (customer) {
+      customer.name = name || customer.name
+      customer.company = company || customer.company
+      customer.active = active || customer.active
+      customer.messAmount = messAmount || customer.messAmount
+      customer.messType.breakfast = breakfast || customer.messType.breakfast
+      customer.messType.lunch = lunch || customer.messType.lunch
+      customer.messType.dinner = dinner || customer.messType.dinner
+      customer.mobile = mobile || customer.mobile
+
+      try {
+        const updatedCustomer = await customer.save()
+        return res.status(HTTPStatus.OK).json({ message: 'Customer Info Updated' })
+      } catch (err) {
+        return res.status(HTTPStatus.BAD_REQUEST).json(err)
+      }
+    }
+  } catch (err) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(err)
+  }
+}
+
 
 export const messPaymentFromCustomer = (req, res) => {
 
