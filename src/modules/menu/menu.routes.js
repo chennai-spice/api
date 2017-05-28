@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as Url from './controller'
+import * as Url from './menu.controller'
 
 const menuRoute = new Router()
 

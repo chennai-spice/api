@@ -1,4 +1,4 @@
-import MenuModel from './model'
+import MenuModel from './menu.model'
 
 export const addMenuItem = (req, res) => {
   const menuItem = new MenuModel(req.body)

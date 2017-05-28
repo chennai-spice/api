@@ -1,6 +1,6 @@
 import express from 'express'
 // import { urlRoute } from './modules'
-import apiRoutes from './routes'
+import apiRoutes from './modules'
 const { dbConfig, middlewareConfig } = require('./config')
 import chalk from 'chalk'
 import dotenv from 'dotenv'
@@ -15,7 +15,7 @@ const app = express()
 // middleware configuration
 middlewareConfig(app)
 
-app.use('/api', apiRoutes)
+apiRoutes(app)
 
 // app.listen(process.env.PORT, (err) => {
 //   if (err) return console.error(err)

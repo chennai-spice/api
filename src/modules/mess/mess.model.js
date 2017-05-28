@@ -1,17 +1,24 @@
 import mongoose from 'mongoose'
 
 const CustomerSchema = mongoose.Schema({
-  name: { type: String },
-  mobile: { type: String },
+  name: { 
+    type: String 
+  },
+  mobile: { 
+    type: String, 
+    unique: true, 
+    required: [true, 'mobile is required'], 
+    trim: true 
+  },
   company: { type: String },
   active: { type: Boolean },
   messAmount: { type: Number },
   startDate: { type: Date },
   dueDate: { type: Date, default: null },
   messType: {
-    breakfast: { type: Boolean },
-    lunch: { type: Boolean },
-    dinner: { type: Boolean }
+    breakfast: { type: Boolean, default: false },
+    lunch: { type: Boolean, default: false },
+    dinner: { type: Boolean, default: false }
   },
   payments: [
     {

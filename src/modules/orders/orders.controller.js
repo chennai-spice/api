@@ -1,4 +1,5 @@
-import OrderModel from './model'
+import OrderModel from './orders.model'
+
 export const newOrder = (req, res) => {
   const orderItem = new OrderModel(req.body)
   orderItem.save()
