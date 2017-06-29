@@ -4,17 +4,15 @@
   "description": "Restaurant Management System API",
   "main": "dist",
   "scripts": {
-    "db:start": "docker run -d -p 3001:27017 --name CSR-Database -v urlShort:/data/db mongo",
+    "db:start": "docker run -d -p 27017:27017 --name CSR-Database -v urlShort:/data/db mongo",
     "db:stop": "docker stop CSR-Database & docker rm CSR-Database",
-    "prebuild": "rimraf ./dist & npm run lint",
     "build": "babel src -D -d dist",
-    "prestart": "npm run -s build",
     "start": "node dist/index.js",
     "lint": "eslint src --fix",
     "dev": "cross-env NODE_ENV=development nodemon  -L src/bin/www -w src -i **/test.js  -x babel-node",
     "test": "mocha --timeout 15000 src/**/*.test.js --compilers js:babel-core/register ",
     "test:jest": "jest --watch",
-    "docker:dev": "docker-compose up -d & docker attach CSR-API",
+    "docker:dev": "npm run docker:rm & docker-compose up -d & docker attach CSR-API",
     "docker:rm": "docker-compose down"
   },
   "repository": {
@@ -48,8 +46,7 @@
     "npm-run-all": "^4.0.2",
     "request": "^2.81.0",
     "rimraf": "^2.6.1",
-    "supertest": "^3.0.0",
-    "supertest-as-promised": "^4.0.2"
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -59,8 +56,11 @@
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "express-joi": "^0.3.1",
+    "express-validation": "^1.0.2",
     "helmet": "^3.5.0",
     "http-status": "^1.0.1",
+    "joi": "^10.5.0",
     "moment": "^2.18.1",
     "mongoose": "^4.9.3",
     "morgan": "^1.8.1",

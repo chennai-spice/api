@@ -2,15 +2,16 @@ FROM node:latest
 MAINTAINER Mohammed Zubair
 RUN mkdir -p /var/app
 WORKDIR /var/app
+RUN apt-get update && apt-get install -y build-essential libcups2-dev libudev-dev
 # RUN npm install -g nodemon
 # RUN npm install -g localtunnel
 
-ADD package.json /var/app/package.json
+ADD package.json package.json
 
 RUN npm install
 
-# copy . /var/app
+COPY . /var/app
 
 EXPOSE 3000
 
-CMD npm run dev
+CMD npm start

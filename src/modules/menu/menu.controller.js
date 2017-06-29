@@ -1,11 +1,10 @@
 import MenuModel from './menu.model'
 
 export const addMenuItem = (req, res) => {
+  let { tags } = req.body
+  req.body.tags = tags.split(',').map(item => item.trim())
   const menuItem = new MenuModel(req.body)
-
-  menuItem.save()
-    .then(doc => res.json(doc))
-    .catch(err => res.json(err))
+  menuItem.save().then(doc => res.json(doc)).catch(err => res.json(err))
 }
 
 export const getAllMenuItems = (req, res) => {

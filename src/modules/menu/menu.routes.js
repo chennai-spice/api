@@ -3,7 +3,7 @@ import * as Url from './menu.controller'
 
 const menuRoute = new Router()
 
-menuRoute.post('/v1/menu/new', Url.addMenuItem)
-menuRoute.get('/v1/menu', Url.getAllMenuItems)
+menuRoute.post('/', Url.addMenuItem)
+menuRoute.get('/', Url.getAllMenuItems)
 
 export default menuRoute

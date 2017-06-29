@@ -9,7 +9,9 @@ services:
       - 27017:27017
 
   web:
-    build: .
+    build: 
+      - context: .
+      - dockerfile: Dockerfile
     container_name: CSR-API
     environment:
       - FORCE_COLOR=1 # Terminal color support for Chalk package

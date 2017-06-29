@@ -1,17 +1,26 @@
 import Mess from './mess.model'
 import moment from 'moment'
 import HTTPStatus from 'http-status'
+import { isMongoId } from 'validator'
 
 
 export const addCustomers = async (req, res) => {
   try {
+
+    const customerExists = await Mess.find({ mobile: req.body.mobile })
+
+    if (customerExists) {
+      return res.status(HTTPStatus.BAD_REQUEST).json({ success: false, message: 'Customer Already Exists' })
+    }
+
     const customer = await Mess.create(req.body)
     return res.status(HTTPStatus.CREATED).json(customer)
   } catch (e) {
-    return res.status(HTTPStatus.BAD_REQUEST).json(e)
+    return res.status(HTTPStatus.BAD_REQUEST).json({ success: false, error: e.errmsg })
   }
 }
 
+// Get Customers
 export const getCustomers = async (req, res) => {
   try {
     const customers = await Mess.find({})
@@ -22,11 +31,19 @@ export const getCustomers = async (req, res) => {
 }
 
 
+// Get Customer By Id
 export const getCustomerById = async (req, res) => {
   const { id } = req.params
 
+  if (!isMongoId(id)) {
+    return res.status(HTTPStatus.OK).json({ success: false, message: 'Invalid ID' })
+  }
+
   try {
     const customer = await Mess.findById(id)
+    if (!customer) {
+      return res.status(HTTPStatus.OK).json({ success: true, message: 'No Record Found' })
+    }
     return res.status(HTTPStatus.OK).json(customer)
   } catch (e) {
     return res.status(HTTPStatus.BAD_REQUEST).json(e)
@@ -38,7 +55,9 @@ export const updateCustomerById = async (req, res) => {
   const { id } = req.params
   const { mobile, name, company, active, messAmount, breakfast, lunch, dinner } = req.body
 
-  console.log(req.body)
+  if (!isMongoId(id)) {
+    return res.status(HTTPStatus.OK).json({ success: false, message: 'Invalid ID' })
+  }
 
   try {
     const customer = await Mess.findById(id)

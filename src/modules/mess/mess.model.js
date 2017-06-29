@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
-const CustomerSchema = mongoose.Schema({
+const CustomerSchema = Schema({
   name: { 
     type: String 
   },
@@ -11,7 +11,7 @@ const CustomerSchema = mongoose.Schema({
     trim: true 
   },
   company: { type: String },
-  active: { type: Boolean },
+  active: { type: Boolean, default: true },
   messAmount: { type: Number },
   startDate: { type: Date },
   dueDate: { type: Date, default: null },
