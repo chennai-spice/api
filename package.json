@@ -14,7 +14,7 @@
     "prestart": "npm run build",
     "start": "node dist/index.js",
     "lint": "eslint src --fix",
-    "dev": "cross-env NODE_ENV=development nodemon  -L src/bin/www -w src -i **/test.js  -x babel-node",
+    "dev": "cross-env NODE_ENV=development nodemon  -L src/index.js -w src -i **/test.js  -x babel-node",
     "test": "mocha --timeout 15000 src/**/*.test.js --compilers js:babel-core/register ",
     "test:jest": "jest --watch",
     "docker:dev": "npm run docker:rm & docker-compose up -d & docker attach csr-api",

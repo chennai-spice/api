@@ -3,9 +3,9 @@ const bluebird = require('bluebird')
 
 const Conn = db => {
   mongoose.Promise = bluebird
-  mongoose.connect(db)
+  mongoose.connect(db, { useMongoClient: false }).connection
   mongoose.connection
-    .once('openUri', () => console.info(`==> 📁  Connected to Database ${db}`))
+    .once('open', () => console.info(`==> 📁  Connected to Database ${db}`))
     .on('error', err => console.log('Error: ', err))
 }
 
