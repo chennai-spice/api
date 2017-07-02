@@ -7,7 +7,9 @@ const { dbConfig, middlewareConfig } = require('./config')
 import chalk from 'chalk'
 import dotenv from 'dotenv'
 
-dotenv.config()
+if (proess.env.NODE_ENV !== 'production') {
+  dotenv.config()
+}
 
 const app = express()
 
