@@ -1,11 +1,9 @@
 import OrderModel from './orders.model'
 import HTTPStatus from 'http-status'
-// import print from '../../services/print-receipt'
 
 export const newOrder = async (req, res) => {
   try {
     const orderItem = await OrderModel.create(req.body)
-    // print(orderItem)
 
     return res.status(HTTPStatus.CREATED).json(orderItem)
   } catch (error) {
