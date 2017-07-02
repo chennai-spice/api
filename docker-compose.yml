@@ -2,25 +2,28 @@ version: '2'
 services:
   mongodb:
     image: mongo
-    container_name: CSR-Database
+    container_name: csr-db
     volumes:
       - data:/data/db
     ports:
-      - 27017:27017
+      - 3001:27017
+    restart: always
 
   web:
     build: 
-      - context: .
-      - dockerfile: Dockerfile
-    container_name: CSR-API
+      context: .
+      dockerfile: Dockerfile
+    container_name: csr-api
     environment:
       - FORCE_COLOR=1 # Terminal color support for Chalk package
     volumes:
       - .:/var/app
     ports:
-      - '3001:3000'
+      - '3000:3000'
     depends_on:
       - 'mongodb'
+    command: ['npm', 'run', 'dev']
+
 
 
 volumes:

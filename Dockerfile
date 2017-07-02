@@ -13,5 +13,3 @@ RUN npm install
 COPY . /var/app
 
 EXPOSE 3000
-
-CMD npm start

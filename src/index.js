@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import express from 'express'
 // import { urlRoute } from './modules'
 import apiRoutes from './modules'
@@ -10,7 +12,7 @@ dotenv.config()
 const app = express()
 
 // database configuration
-dbConfig(process.env.MONGO_URL)
+dbConfig(process.env.MONGO_URI)
 
 // middleware configuration
 middlewareConfig(app)
@@ -18,4 +20,9 @@ middlewareConfig(app)
 // routes
 apiRoutes(app)
 
-export default app
+app.listen(process.env.PORT, () => {
+  console.info(`==> 🌎  ENV=${process.env.NODE_ENV}`)
+  console.info(
+    `==> ✅  Server is listening at http://localhost:${process.env.PORT}`
+  )
+})
