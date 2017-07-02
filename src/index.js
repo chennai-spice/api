@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express()
 
 // database configuration
-dbConfig(process.env.MONGO_URI)
+dbConfig(process.env.MONGODB_URI)
 
 // middleware configuration
 middlewareConfig(app)
