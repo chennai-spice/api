@@ -6,6 +6,7 @@ const menuRoute = new Router()
 menuRoute.post('/', Url.addMenuItem)
 menuRoute.get('/', Url.getAllMenuItems)
 menuRoute.get('/:id', Url.getMenuItemById)
+menuRoute.post('/seed', Url.addMultipleItem)
 menuRoute.delete('/:id', Url.deleteMenu)
 menuRoute.patch('/:id', Url.updateMenu)
 

@@ -8,6 +8,20 @@ export const addMenuItem = (req, res) => {
   menuItem.save().then(doc => res.json(doc)).catch(err => res.json(err))
 }
 
+export const addMultipleItem = async (req, res) => {
+  let items = []
+
+  req.body.map(item => {
+    let { tags } = item
+    item.tags = tags.split(',').map(i => i.trim())
+    items.push(item)
+  })
+
+  MenuModel.insertMany(items, (err, doc) => {
+    res.status(HTTPStatus.OK).json(doc)
+  })
+}
+
 export const getAllMenuItems = (req, res) => {
   MenuModel.find({}).exec((err, doc) => {
     if (err) throw err
