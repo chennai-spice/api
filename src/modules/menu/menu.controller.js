@@ -15,6 +15,15 @@ export const getAllMenuItems = (req, res) => {
   })
 }
 
+export const getMenuItemById = async (req, res) => {
+  try {
+    const menuItem = await MenuModel.findById(req.params.id)
+    return res.status(HTTPStatus.OK).json(menuItem)
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}
+
 export const deleteMenu = async (req, res) => {
   try {
     const menuItem = await MenuModel.findById(req.params.id)
