@@ -19,3 +19,14 @@ export const getAllOrders = async (req, res) => {
     return res.status(HTTPStatus.BAD_REQUEST).json(error)
   }
 }
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const orderItem = await OrderModel.findById(req.params.id)
+
+    await orderItem.remove()
+    return res.sendStatus(HTTPStatus.OK)
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}
