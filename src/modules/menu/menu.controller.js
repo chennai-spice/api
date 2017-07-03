@@ -25,3 +25,17 @@ export const deleteMenu = async (req, res) => {
     return res.status(HTTPStatus.BAD_REQUEST).json(error)
   }
 }
+
+export const updateMenu = async (req, res) => {
+  try {
+    const menuItem = await MenuModel.findById(req.params.id)
+
+    Object.keys(req.body).forEach(key => {
+      menuItem[key] = req.body[key]
+    })
+
+    return res.status(HTTPStatus.OK).json(await menuItem.save())
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}
