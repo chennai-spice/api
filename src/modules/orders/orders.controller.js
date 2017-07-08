@@ -64,3 +64,71 @@ export const transactions = async (req, res) => {
     return res.status(HTTPStatus.BAD_REQUEST).json(error)
   }
 }
+
+export const totalByProduct = async (req, res) => {
+  try {
+    // const report = await OrderModel.aggregate([
+
+    //   { $unwind: "$orderItems" },
+    //   {
+    //     $group: {
+    //       _id: { day: { $dayOfYear: "$date" }, year: { $year: "$date" } },
+    //       qty: { '$sum': "$orderItems.qty" },
+    //       totalAmount: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
+    //       product: { $push: "$$ROOT" },
+    //     }
+    //   },
+    //   {
+    //     $group: {
+    //       _id: { product: '$orderItems.name', id: "$orderItems._id" }
+    //     }
+    //   },
+    //   {
+    //     "$project": {
+    //       _id: "$_id.id",
+    //       product: "$_id.product",
+    //       day: "$_id.day",
+    //       year: "$_id.year",
+    //       totalSales: "$totalAmount",
+    //       totalQty: "$qty",
+    //     }
+    //   }
+    // ])
+
+    const report = await OrderModel.aggregate({
+      $unwind: "$orderItems"
+    }, {
+        $group: {
+          _id: {
+            day: { $dayOfMonth: "$date" },
+            month: { $month: "$date" },
+            year: { $year: "$date" },
+            item: "$orderItems.name"
+          },
+          totalqty: { $sum: "$orderItems.qty" },
+          totalamt: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } }
+        }
+      }, {
+        $group: {
+          _id: {
+            day: "$_id.day",
+            month: "$_id.month",
+            year: "$_id.year"
+          },
+          products: {
+            $push: {
+              item: "$_id.item",
+              totalqty: "$totalqty",
+              totalamt: "$totalamt"
+            }
+          }
+        }
+      },
+      { $sort: { _id: -1 } }
+    )
+
+    res.status(HTTPStatus.OK).json(report)
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}
