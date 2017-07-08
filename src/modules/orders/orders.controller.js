@@ -30,3 +30,37 @@ export const deleteOrder = async (req, res) => {
     return res.status(HTTPStatus.BAD_REQUEST).json(error)
   }
 }
+
+export const report = async (req, res) => {
+  try {
+    const report = await OrderModel.aggregate([{
+      $group:
+      {
+        _id: { day: { $dayOfYear: "$date" }, year: { $year: "$date" } },
+        totalAmount: { $sum: "$total" },
+        count: { $sum: 1 }
+      }
+    }])
+
+    return res.status(HTTPStatus.OK).json(report)
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}
+
+export const transactions = async (req, res) => {
+  try {
+    const report = await OrderModel.aggregate([{
+      $group:
+      {
+        _id: { day: { $dayOfYear: "$date" }, year: { $year: "$date" } },
+        transactions: { $push: "$orderItems" },
+        count: { $sum: 1 }
+      }
+    }])
+
+    return res.status(HTTPStatus.OK).json(report)
+  } catch (error) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(error)
+  }
+}

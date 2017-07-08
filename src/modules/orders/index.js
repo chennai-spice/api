@@ -1,4 +1,4 @@
-import orderRoute from './routes'
-import orderModel from './model'
+import orderRoute from './orders.routes'
+import orderModel from './orders.model'
 
 export { orderRoute, orderModel }
